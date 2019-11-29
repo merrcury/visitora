@@ -1,6 +1,6 @@
 # Visitora
 
-![LOGO] (screenshots/Logo.png)
+![LOGO] (https://github.com/merrcury/visitora/blob/master/screenshots/Logo.png)
 
 ## Introduction
 Visitora is an entry management system which captures several details about the Visitor and had an intelligent intimation protocol. This project is entirely written in Python3, stores its data on [Firebase](https://firebase.google.com/) in real-time which use [Twilio SendGrid](https://sendgrid.com/) for Email Intimation. 
