@@ -1,8 +1,17 @@
-import pyrebase
-import details
+import pyrebase #REST-API Client for firebase
+import details #Confidential file Containing API Keys & Secret
 import secrets 
-import string
-import os
+import string #Library with Secret Algo, for  generating unique ref no.
+# import only system from os 
+from os import system, name
+
+# config = {
+#   "apiKey": "apiKey",
+#   "authDomain": "projectId.firebaseapp.com",
+#   "databaseURL": "https://databaseName.firebaseio.com",
+#   "storageBucket": "projectId.appspot.com",
+#   "serviceAccount": "path/to/serviceAccountCredentials.json"
+# } Get These details from Firebase
 
 config = {
   "apiKey": details.apiKey,
@@ -15,8 +24,15 @@ config = {
 firebase = pyrebase.initialize_app(config)
 db = firebase.database()
 
-clear = lambda: os.system('clear')
+def clear(): 
+    # for windows 
+	if name == 'nt': 
+		_ = system('cls') 
+    # for mac and linux(here, os.name is 'posix') 
+	else: 
+		_ = system('clear') 
 
+#Adding New employee to database
 def createEmployee():
   try:
     Ename = input("Employee's Name: ")
@@ -24,20 +40,25 @@ def createEmployee():
     Ephone = int(input("Employee's Phone Number: "))
     Eloaction = input("Employee's location In Office: ")
     Edata = {"Name": Ename, "Email":  Email, "Phone": Ephone, "Address": Eloaction}
+    #Generating 7 Digit Alpha Numberic Reference Number
     Eref = ''.join(secrets.choice(string.ascii_uppercase + string.digits) for i in range(7))
+    #Pushing data to realtime db
     db.child("Host").child(Eref).set(Edata)
     print()
     print("Creation Successful")
   except ValueError:
     print("Only Numbers Will be Accepted")
 
+#removing an existing db
 def removeEmployee():
   Eref = input("Enter Employee's Refernce Number: ")
   db.child("Host").child(Eref).remove()
   print()
   print("Successfully Removed")
 
+#Updating Info About Current Employee
 def updateEmployee():
+  #Unique Employee Reference Number
   Eref = input("Enter Employee's Refernce Number: ")
   print()
   print("1. Name Change")
@@ -72,6 +93,7 @@ if __name__ == "__main__":
     print("Welcome to VISITORA!! Employee Portal")
     print()
     while(True):
+      #menu
         print()
         print("1. Create new Employee")
         print("2. Remove Old Employee")
@@ -82,16 +104,16 @@ if __name__ == "__main__":
             print()
             if choice == 1:
                 createEmployee()
-                input("Press Enter to Continue")
-                clear()
+                input("Press Enter to Continue")  #To Hold Output, Sleep can also be used
+                clear() #Just to Clear Console
             elif choice == 2:
                 removeEmployee()
-                input("Press Enter to Continue")
-                clear()
+                input("Press Enter to Continue")  #To Hold Output, Sleep can also be used
+                clear() #Just to Clear Console
             elif choice == 3:
                 updateEmployee()
-                input("Press Enter to Continue")
-                clear()
+                input("Press Enter to Continue")  #To Hold Output, Sleep can also be used
+                clear() #Just to Clear Console
             elif choice == 4:
                 print("Bye!")
                 break
