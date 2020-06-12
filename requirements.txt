@@ -15,7 +15,7 @@ python-http-client==3.2.7
 python-jwt==3.2.6
 requests==2.23.0
 requests-toolbelt==0.9.1
-rsa==4.0
+rsa==4.6
 sendgrid==6.2.2
 six==1.14.0
 urllib3==1.25.9
